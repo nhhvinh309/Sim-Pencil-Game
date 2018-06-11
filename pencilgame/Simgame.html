@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sim Game</title>
+	<link rel="icon" href="images/minilogo.png">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet"  />
+	<link href="css/main.css" rel="stylesheet" media="screen">
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+	<link href="bootstrap-social/bootstrap-social.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Arima+Madurai" rel="stylesheet">
+	<!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<script type="text/javascript" src="svg.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<style type="text/css">
+		body{
+			font-family: 'Arima Madurai', cursive;
+		}
+		h4 {
+			padding-bottom: 10px;
+		}
+		#create{
+			float: left;
+			margin-left: 20px;
+			background-image: url(images/backround.png);
+		}
+		#leftcol{
+			padding: 10px;
+			background-color: #d4d4d4;
+			height: 1000px;
+		}
+
+		.letter {
+		  background-image: url("images/lettermes.png");
+		}
+
+	</style>
+</head>
+<body>
+	<div style="float: left;" id="leftcol">
+		<img src="images/logo.png">
+		</br>
+		<span class='button' onmouseover="setvisibilitychip(1)" onmouseout="setvisibilitychip(2)"> Mô tả về Sim </span>
+		<div class='popup'>
+		  <div>Sim là một trò chơi bút chì và giấy được chơi bởi hai người chơi.</br></br><b><u>Cách chơi:</u></b> trò chơi bắt đầu với sáu điểm được vẽ. Mỗi điểm được nối với nhau bằng một đường thẳng.</br>   Hai người chơi sẽ lần lượt tô màu cho những đường thẳng không có màu. Mỗi người chơi sẽ có một màu sắc riêng biệt. Người chơi phải trách tạo ra một tam giác cùng màu của mình (chỉ tính tam giác tạo bởi ba điểm bất kì, những tam giác tạo bởi giao điểm của các đường thẳng không được tính). Người chơi nào tạo thành tam giác sẽ thua ngay lập tức.</div>
+		  <svg height="50" width="1000">
+		    <path d="M0 50 L40 0 L65 0 Z" />
+		    Sorry, your browser does not support inline SVG.
+		  </svg>
+		</div>
+		<h4 class="panel-title" style="padding-top: 30px; margin-left: 3%;font-size: 20px">Chọn số lượng đỉnh:</h4>
+		<div class="btn-group" style="margin-left: 3%; margin-top: 1%">
+		    <button type="button" class="cusbtn btn btn-primary" onclick="setnumVer(6)"><span class="cus1">6 đỉnh</span></button>
+		    <button type="button" class="cusbtn btn btn-primary" onclick="setnumVer(8)"><span class="cus1">8 đỉnh</span></button>
+		    <button type="button" class="cusbtn btn btn-primary" onclick="setnumVer(10)"><span class="cus1">10 đỉnh</span></button>
+		</div>
+		<h4 class="panel-title" style="padding-top: 20px;margin-left: 3%;font-size: 20px">Chọn chế độ chơi:</h4>
+		</br>
+		<button class="btn btn-success" type="button" id="vspersonbtn" onclick="btnvsperson()" style="margin-top: -20px; margin-left: 20px; margin-right: 20px"> VS <span class="glyphicon glyphicon-user" style="transform: scale(1.5,1.5); align: right;color:white; opacity: 0.9;padding: 5px;"></span></button>
+		<button class="btn btn-primary" id="vsbotbtn" onclick="visibilitii()" type="button" style="padding: 8px;margin-left: 20px;margin-top: -20px;"> VS BOT</button>
+		</br>
+		<div class="group_hard1 btn-group" id="group_hard" style="margin-left: 30%; margin-top: 5%">
+		    <button type="button" class="cusbtn btn btn-primary" onclick="setBot(1)"><span class="cus1">DỂ</span></button>
+		    <button type="button" class="cusbtn btn btn-primary" onclick="setBot(2)"><span class="cus1">VỪA</span></button>
+		    <button type="button" class="cusbtn btn btn-primary" onclick="setBot(3)"><span class="cus1">KHÓ</span></button>
+		</div>
+		</br>
+		<button class="btn btn-lg btn-success btn-block" style="width: 50%;margin-left: 20%; margin-top: 30px;" type="button" onclick="drawImage();checkstart()"><span id="btn_start">Bắt đầu chơi</span></button>
+		<!-- <textarea id="txtarea" rows="10" cols="100"></textarea> -->
+	</div>
+
+	<div class="chip" id="chip1">
+	  <img src="images/boy.png" alt="Person" id="imgchip1" onclick="changeAvatar(1)" width="96" height="96">
+	  <span id="chipname1" onclick="changeName(1)">Người chơi 1</span>
+	  <span>- Điểm: <span id="chippoint1">0</span></span>
+	</div>
+
+	<div class="chip" id="chip2">
+	  <img src="images/girl	.png" alt="Person" id="imgchip2" onclick="changeAvatar(2)" width="96" height="96">
+	  <span id="chipname2" onclick="changeName(2)">Người chơi 2</span>
+	  <span>- Điểm: <span id="chippoint2">0</span></span>
+	</div>
+
+	<span class='alarm1' id="alarrm1"><img src="images/bluealarm.png" alt="Person" width="40" height="40" id="imgtime1"> <span id="time1"> 60 Giây</span></span>
+	<span class='alarm2' id="alarrm2"><img src="images/redalarm.png" alt="Person"  width="40" height="40" id="imgtime2"><span id="time2"> 60 Giây</span></span>
+	<div class="divbangdiem" id="bangdiem">
+		<div>
+			<div class="chip" id="chip3">
+			  <img src="images/boy.png" alt="Person" id="imgchip1" onclick="changeAvatar(1)" width="96" height="96">
+			  <span class="tentrbd" id="chipname3">Người chơi 1 </span>
+			  <span id="point1">0</span>
+			</div>
+
+			<div class="chip" id="chip4">
+			  <img src="images/girl	.png" alt="Person" id="imgchip2" onclick="changeAvatar(2)" width="96" height="96">
+			  <span class="tentrbd" id="chipname4">Người chơi 2 </span>
+			  <span id="point2">0</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="cusalert alert alert alert-danger alert-dismissable fade in" id="alertt1">
+	    <strong>Lỗi!</strong><span id="alert_text"></span>
+	</div>
+	<div id="inputName1">
+		<div class="inputnamecus form-group input-group" id="inputnamecuss1" style="width: 300px">
+	        <input type="text" id="inputnameplayer1" class="form-control">
+	       	<span class="input-group-btn">
+	            <button class="btn btn-success" onclick="setName(1)" type="button" id="buttonaddname1"><i class="fa fa-check"></i>
+	            </button>
+	        </span>
+	    </div>
+	</div>
+	<div id="inputName2">
+		<div class="inputnamecus form-group input-group" id="inputnamecuss2" style="width: 300px">
+	        <input type="text" id="inputnameplayer2" class="form-control">
+	       	<span class="input-group-btn">
+	            <button class="btn btn-success" onclick="setName(2)" type="button" id="buttonaddname2"><i class="fa fa-check"></i>
+	            </button>
+	        </span>
+	    </div>
+	</div>
+
+	<div class='botMes' id="boxMes">
+		 <div id="botSay"></div>
+		 <svg height="50" width="1000">
+		    <path d="M0 50 L30 0 L65 0 Z" fill="yellow" />
+		    Sorry, your browser does not support inline SVG.
+		 </svg>
+	</div>
+	<div id="letterwin1" class="letter" style="width: 523px; height: 287px;">
+		</br>
+		<h2 class="setletter" id="whowin">Bạn thắng!!!</h2>
+		<div class="midletter">
+			Cái máy này tuổi gì mà đòi chơi với người...
+		</div>
+		<button id="buttonconti" onclick="drawImage();closeallmes(1);" class="btn btn-success">Thừa thắng xông lên</button>
+	</div>
+
+	<div id="letterlose1" class="letter" style="width: 523px; height: 287px;">
+		</br>
+		<h2 class="setletter" style="color: red;">Máy thắng!!!</h2>
+		<div class="midletter">
+			Lớn đầu mà chơi không lại cái máy... Plezzz
+		</div>
+		<button id="buttonconti1" onclick="drawImage();closeallmes(2);" class="btn btn-default">Lại đi, chẳng qua ăn may thôi</button>
+	</div>
+
+	<div id="letterwin2" class="letter" style="width: 523px; height: 287px;">
+		</br>
+		<h2 class="setletter" id="whowin1"></h2>
+		<div class="midletter" id="letter1">
+			
+		</div>
+		<button id="buttonconti2" onclick="drawImage();closeallmes(3);" class="btn btn-success">Tiếp tục nào!!!</button>
+	</div>
+
+	<div id="letterlose2" class="letter" style="width: 523px; height: 287px;">
+		</br>
+		<h2 class="setletter" id="whowin2"></h2>
+		<div class="midletter" id="letter2">
+			
+		</div>
+		<button id="buttonconti3" onclick="drawImage();closeallmes(4);" class="btn btn-success">tiếp tục nào</button>
+	</div>
+	<div id="create" >
+	</div>
+	<!-- <textarea id="checkarea"></textarea> -->
+	<script type="text/javascript">
+		//Define Variables
+		var radius = 300;
+		var point_size = 10;
+		var center_x = 340;
+		var center_y = 280;
+		var font_size = "20px";
+		var list_points = [];
+		var list_line = [];
+		var list_line1 = [];
+		var line_thick;
+		var point_thick;
+		var color_player1 = "rgb(0,60,245)";
+		var color_player2 = "rgb(255, 0, 0)";
+		var color_chip = "rgb(241, 241, 241)";
+		var player_turn = 0;
+		var	num_point = 0;
+		var chip1 = document.getElementById("chip1");
+		var chip2 = document.getElementById("chip2");
+		var gamemode = null;
+		var playername1 = "Người chơi 1";
+		var playername2 = "Người chơi 2";
+		var listNoColorLine =[];
+		var listCanClickLine = [];
+		var listCanClickLine1 = [];
+		var clicked1 = false;
+
+		var isplaying = false;
+
+		var player_point1 = 0;
+		var player_point2 = 0;
+
+		var timecountdown1;
+		var timecountdown2;
+
+
+		var circleProps = {
+		  fill: 'none',
+		  strokeWidth: 2,
+		  opacity: 0
+		};
+
+		var draw = SVG("create").size(1000,1000);
+		
+		function drawPoint(angle,point_thick){
+		    var x = center_x + radius * Math.cos(-angle*Math.PI/180);
+			var y = center_y + radius * Math.sin(-angle*Math.PI/180);
+			var point = {x1:x, y1:y};
+
+		    var xpoint;
+		    xpoint = draw.circle(0).move(x,y).radius(point_thick);
+		    list_points.push(point);
+		}
+
+		function drawline(num,line_thick){
+			if(num > 1){
+				var pointer = -1;
+				for(i=0; i < (num - 1);i++){
+					
+					var line = draw.line(list_points[num - 1].x1,list_points[num - 1].y1,list_points[i].x1,list_points[i].y1);
+						line.stroke({ width: line_thick });
+						line.attr("stroke-dasharray","15, 10, 5, 10, 15");
+						line.attr("stroke-opacity","0.3");
+						line.attr("stroke-dashoffset","5000");
+					var linee = {x1:list_points[num - 1].x1,y1:list_points[num - 1].y1,x2:list_points[i].x1,y2:list_points[i].y1,checkClick:0,color:null};	
+
+						line.on("mouseover", function() {
+							if(!list_line1[list_line.indexOf(this)].checkClick){
+								if(player_turn == 1) {
+									this.attr("stroke-opacity", "1");
+									this.attr("stroke", color_player2);
+								} else {
+									this.attr("stroke-opacity", "1");
+									this.attr("stroke", color_player1);
+								}
+							}
+						});
+
+						line.on("mouseout", function() {
+							if(!list_line1[list_line.indexOf(this)].checkClick){
+								this.attr("stroke-opacity","0.3");
+								this.attr("stroke", "#000");
+							}
+						});
+
+
+						line.click(function() {
+							// alert(listNoColorLine.length);
+							var countDown = 5000;
+							if (player_turn == 0) {
+								if(list_line1[list_line.indexOf(this)].checkClick == false){
+									this.attr("stroke", color_player1);
+									this.attr("stroke-dasharray","0, 0");
+									this.attr("stroke-opacity","1");
+									while(countDown >0) {
+										countDown --;
+										this.attr("stroke-dashoffset",countDown);
+									}
+
+									list_line1[list_line.indexOf(this)].checkClick = true;
+									player_turn = 1;
+									timecountdown();
+									list_line1[list_line.indexOf(this)].color = "blue";
+									chip2.style.backgroundColor = "red";
+									chip1.style.backgroundColor = color_chip;
+									if(check_game(list_line.indexOf(this))){
+										return;
+									}
+									
+									listNoColorLine.splice(listNoColorLine.indexOf(list_line.indexOf(this)), 1);
+									listCanClickLine.splice(listCanClickLine.indexOf(list_line.indexOf(this)),1);
+									listCanClickLine1.splice(listCanClickLine1.indexOf(list_line.indexOf(this)),1);
+
+									if (gamemode > 1) {
+										if(listNoColorLine.length > 0) {
+											Bot();
+										}
+									}
+									// document.getElementById("txtarea").value+= list_line1[list_line.indexOf(this)].x1 +"\r\n";
+								}
+							} else{
+								if (gamemode == 1) {
+									if(!list_line1[list_line.indexOf(this)].checkClick){
+										this.attr("stroke", color_player2);
+										this.attr("stroke-dasharray","0, 0");
+										this.attr("stroke-opacity","1");
+										list_line1[list_line.indexOf(this)].checkClick = true;
+										player_turn = 0;
+										timecountdown();
+										list_line1[list_line.indexOf(this)].color = "red";
+										chip1.style.backgroundColor = "blue";
+										chip2.style.backgroundColor = color_chip;
+										check_game(list_line.indexOf(this));
+									}
+								}								
+							}
+						});
+					
+					list_line.push(line);
+					list_line1.push(linee);
+					listNoColorLine.push(list_line1.indexOf(linee));
+					listCanClickLine.push(list_line1.indexOf(linee));
+					listCanClickLine1.push(list_line1.indexOf(linee));
+				}
+			}    
+		}
+
+		function drawImage(){
+			isplaying = true;
+			draw.clear();
+			player_turn = 0;
+			list_points = [];
+			list_line = [];
+			list_line1 =[];
+			point_thick =0;
+			line_thick = 0;
+			listNoColorLine = [];
+			listCanClickLine = [];
+			listCanClickLine1 = [];
+
+			isplaying = false;
+
+			settime(num_point);
+
+			chip1.style.backgroundColor = "blue";
+			chip2.style.backgroundColor = color_chip;
+
+			document.getElementById("imgtime2").src = "images/blackalarm.png";
+			document.getElementById("imgtime1").src = "images/bluealarm.png";
+			document.getElementById("time1").style.color = "blue";
+			document.getElementById("time2").style.color = "black";
+
+			if (num_point != 0) {
+				setTimeout(function() {
+				document.getElementById("btn_start").innerHTML="Chơi lại";
+				}, 1000);
+			}
+
+			var dis = 360/num_point;
+			var x = 0;
+			var	num = 0;
+			
+			if(num_point > 0){
+				drawPoint(0,10);
+				
+				x+= dis;
+				num+=1;
+				for(i=1;i<num_point;i++){
+					drawPoint(x,10);
+					x+= dis;
+					num+=1;
+					drawline(num,8);
+				}
+			}
+		}
+
+		function check_game(index){
+			var x1 = list_line1[index].x1;
+			var y1 = list_line1[index].y1;
+			var x2 = list_line1[index].x2;
+			var y2 = list_line1[index].y2;
+
+			for(var i=0;i<list_line1.length;i++){
+					if (i != index){
+						if ((((list_line1[i].x1 == x1) && (list_line1[i].y1 == y1)) || ((list_line1[i].x2 == x1) && (list_line1[i].y2 == y1))) || (((list_line1[i].x1 == x2) && (list_line1[i].y1 == y2)) || ((list_line1[i].x2 == x2) && (list_line1[i].y2 == y2)))) {
+							for (var j=0;j<list_line1.length;j++){
+								if (j != i && j != index){
+									if ((((list_line1[j].x1 == x1) && (list_line1[j].y1 == y1)) || ((list_line1[j].x2 == x1) && (list_line1[j].y2 == y1))) || (((list_line1[j].x1 == x2) && (list_line1[j].y1 == y2)) || ((list_line1[j].x2 == x2) && (list_line1[j].y2 == y2)))) {
+										
+										if ((((list_line1[i].x1 == list_line1[j].x1) && (list_line1[i].y1 == list_line1[j].y1) && check_same_point(list_line1[i].x1,list_line1[i].y1,x1,y1,x2,y2)) || ((list_line1[i].x2 == list_line1[j].x1) && (list_line1[i].y2 == list_line1[j].y1) && check_same_point(list_line1[i].x2,list_line1[i].y2,x1,y1,x2,y2))) || ((list_line1[i].x1 == list_line1[j].x2) && (list_line1[i].y1 == list_line1[j].y2) && check_same_point(list_line1[i].x1,list_line1[i].y1,x1,y1,x2,y2)) || ((list_line1[i].x2 == list_line1[j].x2) && (list_line1[i].y2 == list_line1[j].y2) && check_same_point(list_line1[i].x2,list_line1[i].y2,x1,y1,x2,y2))){
+											if(list_line1[i].color == list_line1[j].color && list_line1[j].color == list_line1[index].color){
+												if (list_line1[index].color == "red"){
+													player_point1 ++;
+													document.getElementById("chippoint1").innerHTML = player_point1;
+													if(gamemode > 1){
+														gameover(1);
+													} else if(gamemode == 1) {
+														gameover(3);
+													}
+													return true;
+												} else {
+													player_point2++;
+													document.getElementById("chippoint2").innerHTML = player_point2;
+													if(gamemode > 1){
+														gameover(2);
+													} else if (gamemode == 1) {
+														gameover(4);
+													}
+													return true;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+		}
+
+		function check_same_point(a,b,c,d,e,f) {
+			if (((a == c) && (b == d)) || ((a == e) && (b == f))){
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		function changeAvatar(who){
+			if(who == 1){
+				if(document.getElementById("imgchip1").src.search("images/girl1.png") != -1) {
+					document.getElementById("imgchip1").src = "images/boy.png";
+				} else {
+					document.getElementById("imgchip1").src = "images/girl1.png";
+				}
+			}
+			if(who == 2) {
+				if(document.getElementById("imgchip2").src.search("images/man.png") != -1) {
+					document.getElementById("imgchip2").src = "images/girl.png";
+				} else{
+					document.getElementById("imgchip2").src = "images/man.png";
+				}
+			}
+		}
+
+		function setnumVer(index){
+			if(num_point == 0){
+				num_point = index;
+				if(index == 6){
+					radius = 300;
+					center_x = 500;
+					center_y = 320;
+				} else if(index == 8) {
+					radius = 350;
+					center_x = 500;
+					center_y = 400;
+				} else {
+					radius = 400;
+					center_x = 500;
+					center_y = 450;
+				}
+				
+			} else if(num_point != index){
+				num_point = index;
+				if(index == 6){
+					radius = 300;
+					center_x = 500;
+					center_y = 320;
+				} else if(index == 8) {
+					radius = 350;
+					center_x = 500;
+					center_y = 400;
+				} else {
+					radius = 400;
+					center_x = 500;
+					center_y = 450;
+				}
+				document.getElementById("btn_start").innerHTML="Bắt đầu chơi";
+			} else if(num_point == index){
+				document.getElementById("btn_start").innerHTML="chơi lại";
+			}
+		}
+
+		function visibilitii(){
+			if(document.getElementById("group_hard").style.visibility == "visible"){
+				document.getElementById("group_hard").style.visibility = "hidden";
+			} else{
+				document.getElementById("group_hard").style.visibility = "visible";
+			}
+
+			document.getElementById("chip1").style.visibility = "visible";
+			document.getElementById("chip2").style.visibility = "visible";
+
+			document.getElementById("chipname2").innerHTML = "Máy";
+
+		}
+
+		function checkstart(){
+
+			if(gamemode == null){
+				document.getElementById("alertt1").innerHTML = " Bạn cần phải chọn chế độ người chơi trước khi chơi!";
+				document.getElementById("alertt1").style.visibility = "visible";
+				setTimeout(function() {
+				document.getElementById("alertt1").style.visibility = "hidden";
+				}, 4000);
+			}
+
+			if(num_point == 0){
+				document.getElementById("alertt1").innerHTML = " Bạn cần phải chọn số lượng đỉnh để thiết lập trò chơi trước khi chơi!";
+				document.getElementById("alertt1").style.visibility = "visible";
+				setTimeout(function() {
+				document.getElementById("alertt1").style.visibility = "hidden";
+				}, 4000);
+			}
+		}
+
+		function btnvsperson() {
+			player_point1 = 0;
+			player_point2 = 0;
+			document.getElementById("alarrm1").style.visibility = "visible";
+			document.getElementById("alarrm2").style.visibility = "visible";
+			document.getElementById("chippoint1").innerHTML = player_point1;
+			document.getElementById("chippoint2").innerHTML = player_point2;
+			document.getElementById("chip1").style.visibility = "visible";
+			document.getElementById("chip2").style.visibility = "visible";
+			gamemode = 1;
+			if(playername2 != null) {
+				document.getElementById("chipname2").innerHTML = playername2;
+			} else {
+				document.getElementById("chipname2").innerHTML = "Người chơi 2";
+			}
+		}
+
+		function setvisibilitychip(index) {
+			if(index == 1) {
+				document.getElementById("chip1").style.visibility = "hidden";
+				document.getElementById("chip2").style.visibility = "hidden";
+			} else {
+				if(num_point != 0) {
+					document.getElementById("chip1").style.visibility = "visible";
+					document.getElementById("chip2").style.visibility = "visible";
+				}
+			}
+		}
+
+		function changeName(index){
+			if(index == 1) {
+				document.getElementById("inputnamecuss1").style.top = "4%";
+				document.getElementById("inputnamecuss1").style.left = "42%";
+				document.getElementById("inputnamecuss1").style.visibility = "visible";
+
+				setTimeout(function(){
+					document.getElementById("inputnamecuss1").style.visibility = "hidden";
+				},10000);
+
+			} else {
+				document.getElementById("inputnamecuss2").style.top = "15.5%";
+				document.getElementById("inputnamecuss2").style.left = "42%";
+				document.getElementById("inputnamecuss2").style.visibility = "visible";
+
+				setTimeout(function(){
+					document.getElementById("inputnamecuss2").style.visibility = "hidden";
+				},10000);
+			}
+		}
+
+		function setName(index) {
+				if(index == 1) {
+					playername1 = document.getElementById("inputnameplayer1").value;
+					document.getElementById("chipname1").innerHTML = playername1;
+					document.getElementById("chipname3").innerHTML = playername1;
+					document.getElementById("inputnamecuss1").style.visibility = "hidden";
+				} else {
+					playername2 = document.getElementById("inputnameplayer2").value;
+					document.getElementById("chipname2").innerHTML = playername2;
+					document.getElementById("chipname4").innerHTML = playername2;
+					document.getElementById("inputnamecuss2").style.visibility = "hidden";
+				}
+		}
+
+		function setBot(index) {
+			player_point1 = 0;
+			player_point2 = 0;
+			document.getElementById("alarrm1").style.visibility = "visible";
+			document.getElementById("alarrm2").style.visibility = "hidden";
+			if(index == 1){
+				player_point1 = 0;
+				player_point2 = 0;
+				document.getElementById("chippoint1").innerHTML = player_point1;
+				document.getElementById("chippoint2").innerHTML = player_point2;
+				gamemode = 2;
+				document.getElementById("chipname2").innerHTML = "Máy dễ";
+				document.getElementById("chipname4").innerHTML = "Máy dễ";
+
+			} else if(index == 2) {
+				player_point1 = 0;
+				player_point2 = 0;
+				document.getElementById("chippoint1").innerHTML = player_point1;
+				document.getElementById("chippoint2").innerHTML = player_point2;
+				gamemode = 3;
+				document.getElementById("chipname2").innerHTML = "Máy vừa";
+				document.getElementById("chipname4").innerHTML = "Máy vừa";
+			} else if(index == 3) {
+				player_point1 = 0;
+				player_point2 = 0;
+				document.getElementById("chippoint1").innerHTML = player_point1;
+				document.getElementById("chippoint2").innerHTML = player_point2;
+				gamemode = 4;
+				document.getElementById("chipname2").innerHTML = "Máy khó";
+				document.getElementById("chipname4").innerHTML = "Máy khó";
+			}
+		}
+
+		function Bot() {
+			var clicked = false;
+			var randomstt;
+			if(gamemode == 2) {
+				var randomstt = Math.floor((Math.random() * listNoColorLine.length));
+				setTimeout(function(){
+					if(!list_line1[listNoColorLine[randomstt]].checkClick){
+					list_line[listNoColorLine[randomstt]].attr("stroke", color_player2);
+					list_line[listNoColorLine[randomstt]].attr("stroke-dasharray","0, 0");
+					list_line[listNoColorLine[randomstt]].attr("stroke-opacity","1");
+					list_line1[listNoColorLine[randomstt]].checkClick = true;
+					player_turn = 0;
+					list_line1[listNoColorLine[randomstt]].color = "red";
+					chip1.style.backgroundColor = "blue";
+					chip2.style.backgroundColor = color_chip;
+					check_game(listNoColorLine[randomstt]);
+					listNoColorLine.splice(randomstt, 1);
+				}
+				},1000);
+			} else if (gamemode == 3) {
+				if(listCanClickLine.length > 0){
+					clicked = false;
+					while (clicked != true) {
+						randomstt = Math.floor((Math.random() * listCanClickLine.length));
+		
+						if (BotChecknormal(randomstt)) {
+							clicked = true;
+							BotPlay(2,randomstt);
+						} else if(listCanClickLine.length <= 0) {
+							autoBotsay1();
+							if(listNoColorLine.length > 0){
+								BotPlay(1,0);
+							}
+							break;
+						}
+					}
+				} else {
+					if(listNoColorLine.length > 0){
+						// autoBotsay1();
+						BotPlay(1,0);
+					}
+				}
+
+			} else if (gamemode == 4) {
+				if(listCanClickLine1.length > 0){
+					clicked = false;
+					while (clicked != true) {
+						randomstt = Math.floor((Math.random() * listCanClickLine1.length));
+
+						if (BotCheckHard(randomstt)) {
+							clicked = true;
+							BotPlay(3,randomstt);
+						} else if(listCanClickLine1.length <= 0) {
+							if(listCanClickLine.length > 0){
+								clicked1 = false; 
+								while(clicked1 != true) {
+									randomstt = Math.floor((Math.random() * listCanClickLine.length));
+									if (BotCheckHard(randomstt)) {
+										clicked = true;
+										clicked1 = true;
+										BotPlay(2,randomstt);
+										break;
+									} else if(listCanClickLine.length <= 0) {
+										if(listNoColorLine.length > 0){
+											BotPlay(1,0);
+										}
+										break;
+									}
+								}
+							}
+						}
+					}
+				} else if(listCanClickLine.length > 0){
+					clicked = false;
+					while (clicked != true) {
+						randomstt = Math.floor((Math.random() * listCanClickLine.length));
+		
+						if (BotCheckHard(randomstt)) {
+							clicked = true;
+							BotPlay(2,randomstt);
+						} else if(listCanClickLine.length <= 0) {
+							if(listNoColorLine.length > 0){
+								BotPlay(1,0);
+							}
+							break;
+						}
+					}
+				} else {
+					if(listNoColorLine.length > 0){
+								BotPlay(1,0);
+					}
+				}
+			}
+		}
+
+		function BotChecknormal(index) {
+			if (CheckForBot(listCanClickLine[index])) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		function BotCheckHard(index) {
+			if(listCanClickLine1.length > 0) {
+				if (CheckForBot(listCanClickLine1[index])) {
+					return false;
+				} else {
+					return true;
+				}
+			} else if(listCanClickLine.length > 0){
+				if (CheckForBot(listCanClickLine[index])) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+			
+		}
+
+		function CheckForBot(index) {
+			var x1 = list_line1[index].x1;
+			var y1 = list_line1[index].y1;
+			var x2 = list_line1[index].x2;
+			var y2 = list_line1[index].y2;
+
+			for(var i=0;i<list_line1.length;i++){
+					if (i != index){
+						if ((((list_line1[i].x1 == x1) && (list_line1[i].y1 == y1)) || ((list_line1[i].x2 == x1) && (list_line1[i].y2 == y1))) || (((list_line1[i].x1 == x2) && (list_line1[i].y1 == y2)) || ((list_line1[i].x2 == x2) && (list_line1[i].y2 == y2)))) {
+							for (var j=0;j<list_line1.length;j++){
+								if (j != i && j != index){
+									if ((((list_line1[j].x1 == x1) && (list_line1[j].y1 == y1)) || ((list_line1[j].x2 == x1) && (list_line1[j].y2 == y1))) || (((list_line1[j].x1 == x2) && (list_line1[j].y1 == y2)) || ((list_line1[j].x2 == x2) && (list_line1[j].y2 == y2)))) {
+										if ((((list_line1[i].x1 == list_line1[j].x1) && (list_line1[i].y1 == list_line1[j].y1) && check_same_point(list_line1[i].x1,list_line1[i].y1,x1,y1,x2,y2)) || ((list_line1[i].x2 == list_line1[j].x1) && (list_line1[i].y2 == list_line1[j].y1) && check_same_point(list_line1[i].x2,list_line1[i].y2,x1,y1,x2,y2))) || ((list_line1[i].x1 == list_line1[j].x2) && (list_line1[i].y1 == list_line1[j].y2) && check_same_point(list_line1[i].x1,list_line1[i].y1,x1,y1,x2,y2)) || ((list_line1[i].x2 == list_line1[j].x2) && (list_line1[i].y2 == list_line1[j].y2) && check_same_point(list_line1[i].x2,list_line1[i].y2,x1,y1,x2,y2))){
+											if(list_line1[i].color == list_line1[j].color){
+												if(gamemode == 4){
+													if (list_line1[i].color == "blue"){
+														if(listCanClickLine1.length > 0){
+															listCanClickLine1.splice(listCanClickLine1.indexOf(index),1);
+															return true;
+														}	
+													}
+												}
+												if (list_line1[i].color == "red"){
+													if(gamemode == 4) {
+														listCanClickLine1.splice(listCanClickLine1.indexOf(index),1);
+													}
+													listCanClickLine.splice(listCanClickLine.indexOf(index),1);
+													return true;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+			}
+			return false;
+		}
+
+		function BotPlay(typeBot,randomstt) {
+			if(typeBot == 1) {
+				setTimeout(function(){
+					if(!list_line1[listNoColorLine[randomstt]].checkClick){
+					list_line[listNoColorLine[randomstt]].attr("stroke", color_player2);
+					list_line[listNoColorLine[randomstt]].attr("stroke-dasharray","0, 0");
+					list_line[listNoColorLine[randomstt]].attr("stroke-opacity","1");
+					list_line1[listNoColorLine[randomstt]].checkClick = true;
+					player_turn = 0;
+					timecountdown();
+					list_line1[listNoColorLine[randomstt]].color = "red";
+					chip1.style.backgroundColor = "blue";
+					chip2.style.backgroundColor = color_chip;
+					check_game(listNoColorLine[randomstt]);
+					listNoColorLine.splice(randomstt, 1);
+					}
+				},1000);
+			} else if(typeBot == 2) {
+				setTimeout(function(){
+					if(!list_line1[listCanClickLine[randomstt]].checkClick){
+						list_line[listCanClickLine[randomstt]].attr("stroke", color_player2);
+						list_line[listCanClickLine[randomstt]].attr("stroke-dasharray","0, 0");
+						list_line[listCanClickLine[randomstt]].attr("stroke-opacity","1");
+						list_line1[listCanClickLine[randomstt]].checkClick = true;
+						player_turn = 0;
+						timecountdown();
+						list_line1[listCanClickLine[randomstt]].color = "red";
+						chip1.style.backgroundColor = "blue";
+						chip2.style.backgroundColor = color_chip;
+						check_game(listCanClickLine[randomstt]);
+
+						listNoColorLine.splice(listNoColorLine.indexOf(listCanClickLine[randomstt]), 1);
+						listCanClickLine.splice(randomstt,1);
+					}
+				},1000);
+			} else if(typeBot == 3) {
+				setTimeout(function(){
+					if(!list_line1[listCanClickLine1[randomstt]].checkClick){
+						list_line[listCanClickLine1[randomstt]].attr("stroke", color_player2);
+						list_line[listCanClickLine1[randomstt]].attr("stroke-dasharray","0, 0");
+						list_line[listCanClickLine1[randomstt]].attr("stroke-opacity","1");
+						list_line1[listCanClickLine1[randomstt]].checkClick = true;
+						player_turn = 0;
+						timecountdown();
+						list_line1[listCanClickLine1[randomstt]].color = "red";
+						chip1.style.backgroundColor = "blue";
+						chip2.style.backgroundColor = color_chip;
+						check_game(listCanClickLine1[randomstt]);
+
+						listNoColorLine.splice(listNoColorLine.indexOf(listCanClickLine1[randomstt]), 1);
+						listCanClickLine.splice(listCanClickLine.indexOf(listCanClickLine1[randomstt]),1);
+						listCanClickLine1.splice(randomstt,1);
+					}
+				},1000);
+			}
+		}
+
+		function autoBotsay1() {
+			// setTimeout(function(){
+			// 	document.getElementById("botSay").innerHTML = "Thôi chết thua rồi!!!";
+			// 	document.getElementById("boxMes").style.opacity = "1";
+			// 	document.getElementById("boxMes").style.visibility = "visible";
+			// 	// document.getElementById("boxMes").style.opacity = "0";
+			// 	// document.getElementById("boxMes").style.visibility = "hidden";
+			// },2000);
+		}
+
+		function gameover(index){
+			isplaying = true;
+			if(index == 1) {
+				document.getElementById("letterwin1").style.visibility = "visible";
+			} else if(index == 2){
+				document.getElementById("letterlose1").style.visibility = "visible";
+			} else if(index == 3){
+				document.getElementById("whowin1").innerHTML = playername1+" thắng";
+				document.getElementById("letter1").innerHTML = "Có vẻ "+playername1+" giỏi quá. Triệu like!!!";
+				document.getElementById("letterwin2").style.visibility = "visible";
+			} else if(index == 4){
+				document.getElementById("whowin2").innerHTML = playername2+" thắng";
+				document.getElementById("letter2").innerHTML = "Thì ra " + playername2+" cũng không kém cậy nhỉ!!!";
+				document.getElementById("letterlose2").style.visibility = "visible";
+			}
+		}
+
+		function closeallmes(index){
+			if(index == 1) {
+				document.getElementById("letterwin1").style.visibility = "hidden";
+			} else if(index == 2){
+				document.getElementById("letterlose1").style.visibility = "hidden";
+			} else if(index == 3){
+				document.getElementById("letterwin2").style.visibility = "hidden";
+			} else if(index == 4){
+				document.getElementById("letterlose2").style.visibility = "hidden";
+			}
+		}
+
+		function settime(index){
+			if (index == 6) {
+				// isplaying = true;
+				timecountdown1 = 60;
+				timecountdown2 = 60;
+				document.getElementById("time1").textContent = timecountdown1 + " Giây";
+				document.getElementById("time2").textContent = timecountdown2 + " Giây";
+			} else if(index == 8){
+				// isplaying = true;
+				timecountdown1 = 180;
+				timecountdown2 = 180;
+				document.getElementById("time1").textContent = timecountdown1 + " Giây";
+				document.getElementById("time2").textContent = timecountdown2 + " Giây";
+			} else {
+				// isplaying = true;
+				timecountdown1 = 300;
+				timecountdown2 = 300;
+				document.getElementById("time1").textContent = timecountdown1 + " Giây";
+				document.getElementById("time2").textContent = timecountdown2 + " Giây";
+			}
+		}
+
+		function timecountdown(){
+			if(gamemode == 1){
+				if(player_turn == 0) {
+					if(timecountdown1 > 0) {
+						document.getElementById("imgtime2").src = "images/blackalarm.png";
+						document.getElementById("imgtime1").src = "images/bluealarm.png";
+						document.getElementById("time1").style.color = "blue";
+						document.getElementById("time2").style.color = "black";
+						var downloadTimer = setInterval(function(){
+							timecountdown1--;
+						   document.getElementById("time1").textContent = timecountdown1 + " Giây";
+						    if(timecountdown1 <= 0){
+						        clearInterval(downloadTimer);
+								player_point2 ++;
+								document.getElementById("chippoint2").innerHTML = player_point2;
+						        gameover(4);
+						    }
+						    if(player_turn == 1){
+						    	clearInterval(downloadTimer);
+						    }
+						    if (isplaying) {
+						    	clearInterval(downloadTimer)
+						    }
+						    },1000);
+
+					} else {
+						player_point2 ++;
+						document.getElementById("chippoint2").innerHTML = player_point2;
+						gameover(4);
+					}
+				} else {
+					if(timecountdown2 > 0) {
+						document.getElementById("imgtime2").src = "images/redalarm.png";
+						document.getElementById("imgtime1").src = "images/blackalarm.png";
+						document.getElementById("time1").style.color = "black";
+						document.getElementById("time2").style.color = "red";
+						var downloadTimer = setInterval(function(){
+							timecountdown2--;
+						    document.getElementById("time2").textContent = timecountdown2 + " Giây";
+						    if(timecountdown2 <= 0){
+						        clearInterval(downloadTimer);
+						        player_point1 ++;
+								document.getElementById("chippoint1").innerHTML = player_point1;
+						        gameover(3);
+						    }
+						    if(player_turn == 0){
+						    	clearInterval(downloadTimer);
+						    }
+						    if (isplaying) {
+						    	clearInterval(downloadTimer)
+						    }
+						    },1000);
+					} else{
+						player_point1 ++;
+						document.getElementById("chippoint1").innerHTML = player_point1;
+						gameover(3);
+					}
+					
+					}
+			} else {
+				if(player_turn == 0) {
+					if(timecountdown1 > 0) {
+						document.getElementById("imgtime2").src = "images/blackalarm.png";
+						document.getElementById("imgtime1").src = "images/bluealarm.png";
+						document.getElementById("time1").style.color = "blue";
+						document.getElementById("time2").style.color = "black";
+						var downloadTimer = setInterval(function(){
+						    timecountdown1--;
+						    document.getElementById("time1").textContent = timecountdown1 + " Giây";
+						    if(timecountdown1 <= 0){
+						        clearInterval(downloadTimer);
+						        gameover(2);
+						    }
+						    if(player_turn == 1){
+						    	clearInterval(downloadTimer);
+						    }
+						    if (isplaying) {
+						    	clearInterval(downloadTimer)
+						    }
+						    },1000);
+
+					} else {
+						gameover(2);
+					}
+				}
+			}
+		}
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,353 @@
+.popup{
+  position:fixed;
+  left:15%;
+  margin-left:35px;
+  top:35%;
+  margin-top:-210px;
+  opacity:0;
+  transition:all 1s;
+  -webkit-transition:all 1s;
+  visibility: hidden;
+}
+
+
+.popup div
+{
+  width:700px;
+  font-size:20px;
+}
+
+.popup div
+{
+  padding:20px;
+  background-color:black;
+  border-radius:40px;
+  color:white;
+  text-align:center;
+
+}
+
+/* button */
+.button{
+ position:static;
+ top:47%;
+ margin-top:10%;
+ left:12%;
+ margin-left:78px;
+ display:inline-block;
+ text-align:center;
+ background-color:yellow;
+ padding:15px;
+  
+ font-size:20px;
+ 
+ border-radius:100px;
+ 
+  transition:all 1s;
+  -webkit-transition:all 1s;
+}
+
+.button:hover{
+  background-color:#00FFFF;
+  cursor:pointer;
+}
+/* Gestion des évenements */
+
+.button:hover ~.popup
+{
+  margin-left:45px;
+  margin-top:-220px;
+  opacity:1;
+  visibility: visible;
+}
+
+
+.alarm1{
+ position:fixed;
+ top: 20px;
+ left:79%;
+ margin-left:78px;
+ display:inline-block;
+ text-align:center;
+ background-color:#f1f1f1;
+ padding:15px;
+  
+ font-size:20px;
+ 
+ border-radius:100px;
+}
+
+.alarm2{
+ position:fixed;
+ top: 100px;
+ left:79%;
+ margin-left:78px;
+ display:inline-block;
+ text-align:center;
+ background-color:#f1f1f1;
+ padding:15px;
+  
+ font-size:20px;
+ 
+ border-radius:100px;
+}
+
+  #alarrm1 {
+    visibility: hidden;
+  }
+
+  #alarrm2 {
+    visibility: hidden;
+  }
+
+#time1{
+  color: blue;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#time2{
+  color: red;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+.divbangdiem {
+  position:fixed;
+  left:78%;
+  margin-left:35px;
+  top:47%;
+  margin-top:-210px;
+  opacity:0;
+  transition:all 1s;
+  -webkit-transition:all 1s;
+  visibility: hidden;
+}
+
+
+.divbangdiem div
+{
+  width:220px;
+  font-size:20px;
+}
+
+.divbangdiem div
+{
+
+  background-color: gray;
+  border-radius:40px;
+  padding-right: 40px;
+  text-align:center;
+
+}
+
+.tentrbd {
+
+}
+
+/*#chip3, #chip4 {
+  border-color: gray;
+  border-width: 10px !important;
+}
+*/
+#chip3 {
+  background-color: #f1f1f1;
+}
+
+#chip3 span {
+  color: blue;
+}
+
+#chip4 {
+  background-color: #f1f1f1; 
+}
+
+#chip4 span {
+  color: red;
+}
+
+.chip {
+    display: inline-block;
+    padding: 0 25px;
+    height: 50px;
+    font-size: 18px;
+    line-height: 50px;
+    border-radius: 25px;
+    margin: 20px;
+    background-color: #f1f1f1;
+}
+
+.chip img {
+    float: left;
+    margin: 0 10px 0 -25px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+#chip1  {
+  position: fixed;
+  visibility: hidden;
+}
+
+#chip2 {
+  margin-top: 7%;
+  position: fixed;
+  visibility: hidden;
+}
+
+#point1, #point2 {
+  margin-left: 10px;
+}
+
+.closebtn {
+    padding-left: 10px;
+    color: #888;
+    font-weight: bold;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: #000;
+}
+
+.person1 {
+  background-color: blue;
+}
+
+
+.cusbtn .cus1 {
+  font-size: 20px;
+}
+
+.group_hard1 {
+  visibility: hidden;
+}
+
+.cusalert {
+  position: fixed;
+  visibility: hidden;
+  top: 3%;
+  left: 50%;
+}
+
+.cusalert strong,span {
+  font-size: 20px;
+}
+
+
+.inputnamecus {
+  position: fixed;
+  visibility: hidden;
+}
+
+.botMes{
+  position:fixed;
+  left:37%;
+  top:33%;
+  margin-top:-210px;
+  opacity:0;
+  transition:all 1s;
+  -webkit-transition:all 1s;
+  visibility: hidden;
+}
+
+
+.botMes div
+{
+  width:400px;
+  font-size:20px;
+}
+
+.botMes div
+{
+  padding:20px;
+  background-color:yellow;
+  border-radius:40px;
+  color: black;
+  text-align:center;
+}
+
+#letterwin1 {
+  position: fixed;
+  width: 523px;
+  left: 35%;
+  top: 28%;
+  visibility: hidden;
+}
+
+.setletter{
+  opacity: .7;
+  margin-left: 40%;
+  font-size: 40px;
+  color: blue;
+  margin-top: 30px;
+}
+
+.midletter {
+  font-size: 25px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#buttonconti {
+  font-size: 20px;
+  text-align: center;
+  margin-left: 35%;
+  margin-top: 30px;
+}
+
+#letterlose1 {
+  position: fixed;
+  width: 523px;
+  left: 40%;
+  top: 28%;
+  visibility: hidden;
+}
+
+#buttonconti1 {
+  font-size: 20px;
+  text-align: center;
+  margin-left: 30%;
+  margin-top: 30px;
+}
+
+#letterwin2 {
+  position: fixed;
+  width: 523px;
+  left: 40%;
+  top: 28%;
+  visibility: hidden;
+}
+
+
+#buttonconti2 {
+  font-size: 20px;
+  text-align: center;
+  margin-left: 35%;
+  margin-top: 30px;
+}
+
+#letterlose2 {
+  position: fixed;
+  width: 523px;
+  left: 40%;
+  top: 28%;
+  visibility: hidden;
+}
+
+#buttonconti3 {
+  font-size: 20px;
+  text-align: center;
+  margin-left: 35%;
+  margin-top: 30px;
+}
+
+#whowin2 {
+  color: red;
+}
